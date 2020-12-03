@@ -3,9 +3,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''mvn package
+        sh '''mvn clean package
 
-ls'''
+ls /target'''
       }
     }
 
