@@ -3,9 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''mvn clean package
-
-ls target'''
+        sh 'mvn clean package'
       }
     }
 
