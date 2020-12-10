@@ -52,6 +52,7 @@ public class UserRoleService {
 				Options option = DAOUtilities.getOptionDAO()
 						.getOptionByQuestionId(questions.get(count).getQuestion_id());
 				Answer ans = DAOUtilities.getAnswerDAO().getAnswerByQuestionId(questions.get(count).getQuestion_id());
+				System.out.println(ans);
 				Choice rightAnswer = DAOUtilities.getChoiceDAO().getChoiceById(ans.getChoice_id());
 				quizs.add(new Quiz(questions.get(count).getQuestion(), option.getOption_one(), option.getOption_two(),
 						option.getOption_three(), rightAnswer.getChoice()));
