@@ -10,7 +10,7 @@ pipeline {
     stage('Deploy') {
       steps {
         sh '''cp target/examPro-0.0.1-SNAPSHOT.war /home/ec2-user/apache-tomcat-8.5.60/webapps
-mv apache-tomcat-8.5.60/webapps/examPro-0.0.1-SNAPSHOT.war apache-tomcat-8.5.60/webapps/examPro.war'''
+'''
       }
     }
 
