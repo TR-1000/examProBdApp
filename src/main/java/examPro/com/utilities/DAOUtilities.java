@@ -28,29 +28,60 @@ import examPro.com.dao.subject.choose_optionDAO;
 import examPro.com.dao.subject.choose_optionDAOImpl;
 
 public class DAOUtilities {
-	private static final String CONNECTION_USERNAME = System.getenv("dbUserName"); //accessing the system environment variable for user Name
-	private static final String CONNECTION_PASSWORD =System.getenv("dbPassword");  //accessing the system environment variable for password
-	private static final String URL = System.getenv("dbConnectionString_for_AWS") ;//System.getenv("dbConnectionString"); //accessing the system environment variable for  url
+	
+	
+	
+	
+//	private static final String dbName = System.getenv("RDS_DB_NAME");
+	private static final String userName = System.getenv("RDS_USERNAME");
+	private static final String password = System.getenv("RDS_PASSWORD");
+	private static final String hostname = System.getenv("RDS_HOSTNAME");
+	private static final String port = System.getenv("RDS_PORT");
+	private static final String jdbcUrl = "jdbc:postgresql://" + hostname + ":" + port + "/" + "?user=" + userName + "&password=" + password;
+	
+	
+	
+//	private static final String URL = "jdbc:postgresql://localhost:5432/exam";
+//	private static final String CONNECTION_USERNAME = "postgres";
+//	private static final String CONNECTION_PASSWORD = "";
+	
+	
+//	private static final String CONNECTION_USERNAME = System.getenv("dbUserName"); //accessing the system environment variable for user Name
+//	private static final String CONNECTION_PASSWORD =System.getenv("dbPassword");  //accessing the system environment variable for password
+//	private static final String URL = System.getenv("dbConnectionString_for_AWS") ;//System.getenv("dbConnectionString"); //accessing the system environment variable for  url
 	private static Connection connection;
 	
 	public static synchronized Connection getConnection() throws SQLException {
 		if (connection == null) {
 			try {
 				Class.forName("org.postgresql.Driver");
-				//Class.forName("com.mysql.jdbc.Driver");
+				
 			} catch (ClassNotFoundException e) {
 				System.out.println("Could not register driver!");
 				e.printStackTrace();
+				
 			}
-			connection = DriverManager.getConnection(URL, CONNECTION_USERNAME, CONNECTION_PASSWORD);
+			connection = DriverManager.getConnection(jdbcUrl);
 		}
 		
 		//If connection was closed then retrieve a new connection
 		if (connection.isClosed()){
 			System.out.println("Opening new connection...");
-			connection = DriverManager.getConnection(URL, CONNECTION_USERNAME, CONNECTION_PASSWORD);
+			connection = DriverManager.getConnection(jdbcUrl);
 		}
 		return connection;
+	}
+	
+	//test if the connection works
+	public static void main(String[] args) {
+		System.out.println(jdbcUrl);
+		//Try with resources will automatically close the resource at the end of the try or catch block
+		try(Connection conn = DAOUtilities.getConnection()){
+			System.out.println("connection successful");
+			System.out.println(jdbcUrl);
+		}catch(SQLException e) {
+			System.out.println(e);
+		}
 	}
 	
 
