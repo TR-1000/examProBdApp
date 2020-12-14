@@ -53,7 +53,7 @@ public class RequestHelper {
 				case "/take/quiz":
 					// take subject name and sub topic name from user and generate quiz.
 
-					return userRoleService.generateQuiz("JAVA", "Core Java", 3);
+					return userRoleService.generateQuiz("JAVA", "Core Java", 5);
 
 				case "/user/info":
 					// response.getWriter().write("To be implemented");
